@@ -1,5 +1,6 @@
 package nextstep.subway.line;
 
+import static nextstep.subway.line.LineFixture.지하철_노선_구간추가;
 import static nextstep.subway.line.LineFixture.지하철_노선_목록_조회;
 import static nextstep.subway.line.LineFixture.지하철_노선_삭제;
 import static nextstep.subway.line.LineFixture.지하철_노선_생성;
@@ -10,7 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.util.List;
 import nextstep.subway.AcceptanceTest;
+import nextstep.subway.dto.LineResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -110,4 +113,31 @@ public class LineAcceptanceTest extends AcceptanceTest {
         assertThat(지하철_노선_목록_조회().jsonPath().getList("")).isEmpty();
     }
 
+    /**
+     * @GIVEN 강남역 생성
+     * @AND 역삼역 생성
+     * @AND 강남역 역삼역 2호선 노선 생성
+     * @AND 블루보틀역 생성
+     * @WHEN 강남역 역삼역 사이 신규 구간 등록
+     * @THEN 강남역 역삼역 사이 블루보틀역 등록됨
+     **/
+    @Test
+    @DisplayName("지하철 구간 등록")
+    void addSection() {
+        //given
+        Long 강남역 = 지하철역_생성후_아이디_반환("강남역");
+        Long 역삼역 = 지하철역_생성후_아이디_반환("역삼역");
+        Long 이호선 = 지하철_노선_생성후_아이디_반환("2호선", "bg-green-600", 10, 강남역, 역삼역);
+        Long 블루보틀역 = 지하철역_생성후_아이디_반환("블루보틀역");
+
+        //when
+        ExtractableResponse<Response> response = 지하철_노선_구간추가(이호선, 강남역, 블루보틀역, 4);
+
+        //then
+        List<LineResponse> lineResponses = 지하철_노선_목록_조회().jsonPath().getList("");
+        assertThat(lineResponses)
+            .hasSize(3)
+            .extracting(LineResponse::getName)
+            .containsExactly("강남역", "블루보틀역", "역삼역");
+    }
 }

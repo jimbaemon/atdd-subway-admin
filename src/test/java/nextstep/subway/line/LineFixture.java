@@ -89,4 +89,21 @@ public class LineFixture {
             .extract();
     }
 
+    public static ExtractableResponse<Response> 지하철_노선_구간추가(final Long lineId,
+        final Long upStationId,
+        final Long downStationId, final int distance) {
+        Map<String, String> params = new HashMap<>();
+        params.put("upStationId", String.valueOf(upStationId));
+        params.put("downStationId", String.valueOf(downStationId));
+        params.put("distance", String.valueOf(distance));
+
+        return RestAssured.given().log().all()
+            .body(params)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .when().post("/lines/" + lineId + "/section")
+            .then().log().all()
+            .statusCode(HttpStatus.OK.value())
+            .extract();
+    }
+
 }
