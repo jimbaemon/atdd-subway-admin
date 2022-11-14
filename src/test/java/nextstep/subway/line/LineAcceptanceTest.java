@@ -32,8 +32,9 @@ public class LineAcceptanceTest extends AcceptanceTest {
         또다른지하철역 = 지하철역_생성후_아이디_반환("또다른지하철역");
     }
 
-    /**
-     * When 지하철 노선을 생성하면 Then 지하철 노선 목록 조회 시 생성한 노선을 찾을 수 있다.
+    /*
+     * When 지하철 노선을 생성하면
+     * Then 지하철 노선 목록 조회 시 생성한 노선을 찾을 수 있다.
      */
     @Test
     @DisplayName("지하철 노선 생성")
@@ -45,8 +46,10 @@ public class LineAcceptanceTest extends AcceptanceTest {
         assertThat(response.jsonPath().getString("name")).isEqualTo("신분당선");
     }
 
-    /**
-     * Given 2개의 지하철 노선을 생성하고 When 지하철 노선 목록을 조회하면 Then 지하철 노선 목록 조회 시 2개의 노선을 조회할 수 있다.
+    /*
+     * Given 2개의 지하철 노선을 생성하고
+     * When 지하철 노선 목록을 조회하면
+     * Then 지하철 노선 목록 조회 시 2개의 노선을 조회할 수 있다.
      */
     @Test
     @DisplayName("지하철 노선 목록 조회")
@@ -64,8 +67,10 @@ public class LineAcceptanceTest extends AcceptanceTest {
             .contains("신분당선", "분당선");
     }
 
-    /**
-     * Given 지하철 노선을 생성하고 When 생성한 지하철 노선을 조회하면 Then 생성한 지하철 노선의 정보를 응답받을 수 있다.
+    /*
+     * Given 지하철 노선을 생성하고
+     * When 생성한 지하철 노선을 조회하면
+     * Then 생성한 지하철 노선의 정보를 응답받을 수 있다.
      */
     @Test
     @DisplayName("지하철노선 조회")
@@ -80,8 +85,10 @@ public class LineAcceptanceTest extends AcceptanceTest {
         assertThat(response.jsonPath().getString("name")).isEqualTo("신분당선");
     }
 
-    /**
-     * Given 지하철 노선을 생성하고 When 생성한 지하철 노선을 수정하면 Then 해당 지하철 노선 정보는 수정된다.
+    /*
+     * Given 지하철 노선을 생성하고
+     * When 생성한 지하철 노선을 수정하면
+     * Then 해당 지하철 노선 정보는 수정된다.
      */
     @Test
     @DisplayName("지하철노선 수정")
@@ -97,8 +104,9 @@ public class LineAcceptanceTest extends AcceptanceTest {
         assertThat(response.jsonPath().getString("name")).isEqualTo("다른분당선");
     }
 
-    /**
-     * Given 지하철 노선을 생성하면 When 생성한 지하철 노선을 삭제하면 Then  지하철 노선 정보는 삭제된다
+    /*
+     * Given 지하철 노선을 생성하면
+     * When 생성한 지하철 노선을 삭제하면 Then  지하철 노선 정보는 삭제된다
      */
     @Test
     @DisplayName("지하철노선 삭제")
@@ -113,14 +121,14 @@ public class LineAcceptanceTest extends AcceptanceTest {
         assertThat(지하철_노선_목록_조회().jsonPath().getList("")).isEmpty();
     }
 
-    /**
-     * @GIVEN 강남역 생성
-     * @AND 역삼역 생성
-     * @AND 강남역 역삼역 2호선 노선 생성
-     * @AND 블루보틀역 생성
-     * @WHEN 강남역 역삼역 사이 신규 구간 등록
-     * @THEN 강남역 역삼역 사이 블루보틀역 등록됨
-     **/
+    /*
+     * GIVEN 강남역 생성
+     * AND 역삼역 생성
+     * AND 강남역 역삼역 2호선 노선 생성
+     * AND 블루보틀역 생성
+     * WHEN 강남역 역삼역 사이 신규 구간 등록
+     * THEN 강남역 역삼역 사이 블루보틀역 등록됨
+     */
     @Test
     @DisplayName("지하철 구간 등록")
     void addSection() {
